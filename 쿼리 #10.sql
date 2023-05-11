@@ -24,9 +24,15 @@ SELECT *
 FROM customer
 WHERE last_name REGEXP '[YL]$';
 
+SELECT *
+FROM customer
+WHERE last_name REGEXP 'COB+';
+
+
 SELECT rental_id, customer_id
 FROM rental
 WHERE return_date IS NULL;
+
 
 -- 반납일이 '2005-05-01' ~ '2005-09-01'이 아닌 렌탈 정보 알고싶다.
 SELECT *
@@ -35,18 +41,19 @@ WHERE return_date NOT BETWEEN '2005-05-01' AND '2005-08-31'
 OR return_date IS NULL;
 
 -- P.126
+-- 4-5-2
 SELECT payment_id, customer_id, amount, DATE(payment_date)
 FROM payment
 WHERE payment_id BETWEEN 101 AND 120
 AND customer_id = 5 AND not(amount > 6 OR DATE(payment_date) = '2005-06-19');
 
--- 4-3
+-- 4-5-3
 
 SELECT *
 FROM payment
 WHERE amount IN(1.98, 7.98, 9.98);
 
--- 4-4
+-- 4-5-4
 SELECT *
 FROM customer 
 WHERE last_name LIKE '_A%W%';
@@ -61,7 +68,6 @@ SELECT A.food, A.person_id, B.person_id, B.fname, B.lname
 FROM favorite_food A
 INNER JOIN person B
 ON A.person_id = B.person_id; -- 둘 다 가진거 나온다
-
 
 
 SELECT * 
@@ -87,7 +93,7 @@ INNER JOIN city C
 ON B.city_id = C.city_id;
 
 
--- 'Cailfornia' 값만 알고 있다. 미국 주중에 Cailfornia에 사는 소비자 정보가 궁금하다.
+-- 'California' 값만 알고 있다. 미국 주중에 Cailfornia에 사는 소비자 정보가 궁금하다.
 
 SELECT * 
 FROM customer A
@@ -115,7 +121,8 @@ INNER JOIN film_actor B
 ON A.actor_id = B.actor_id
 INNER JOIN film C
 ON B.film_id = C.film_id
-WHERE (A.first_name, A.last_name) IN (('CATE','MCQUEEN'),('CUBA','BIRCH'))
+WHERE (A.first_name, A.last_name) 
+IN (('CATE','MCQUEEN'),('CUBA','BIRCH'))
 ORDER BY film_id;
 -- WHERE (C.first_name ='CATE' AND C.last_name = 'MCQUEEN') OR
 -- (C.first_name ='CUBA' AND C.last_name = 'BIRCH');
